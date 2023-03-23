@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres15
+      - postgres15=/var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres15:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - earth
+
+networks:
+  earth:
+    external: true
+    name: earth
+
+volumes:
+  postgres15:
+    external: true
+    name:
+      postgres15
