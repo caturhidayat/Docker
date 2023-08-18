@@ -16,12 +16,38 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  # Example job for node_exporter
-  # - job_name: 'node_exporter'
-  #   static_configs:
-  #     - targets: ['node_exporter:9100']
+  # Example job for windows_exporter
+  - job_name: 'windows_exporter'
+    static_configs:
+      - targets: ['localhost:9182']
+
 
   # Example job for cadvisor
   # - job_name: 'cadvisor'
   #   static_configs:
   #     - targets: ['cadvisor:8080']
+
+  - job_name: 'network'
+    static_configs:
+    - targets: ['172.19.169.74']
+      labels:
+        job: 'Packing Area'
+    # - targets: ['192.168.2.90']
+    #   labels:
+    #     job: 'downstairsap'
+    # - targets: ['192.168.2.89']
+    #   labels:
+    #     job: 'upstairsap'
+    # - targets: ['192.168.2.12']
+    #   labels:
+    #     job: 'switch'
+    metrics_path: /snmp
+    params:
+      module: [if_mib]
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 172.29.59.198:9116  # The SNMP exporter's real hostname:port.
