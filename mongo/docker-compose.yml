@@ -1,0 +1,29 @@
+version: '3'
+
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - earth
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongoDocker
+      MONGO_INITDB_DATABASE: admin
+
+    volumes:
+      - mongo:/data/db
+
+
+networks:
+  earth:
+    external: true
+    name: earth
+
+volumes:
+  mongo:
+    external: true
+    name: mongo
