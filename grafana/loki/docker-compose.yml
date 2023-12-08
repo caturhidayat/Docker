@@ -1,0 +1,44 @@
+version: "3"
+
+volumes:
+  loki-data:
+    driver: local
+
+services:
+  loki:
+    image: grafana/loki:2.9.0
+    ports:
+      - "3331:3100"
+    volumes:
+      # - ./config/loki-config.yaml:/etc/loki/local-config.yaml
+      - loki-data:/loki
+    command: -config.file=/etc/loki/local-config.yaml
+
+
+# version: '3.9'
+
+# networks:
+#   grafana_loki:
+
+# services:
+#   grafana:
+#     image: grafana/grafana-oss:latest
+#     ports:
+#       - 3330:3000
+
+#   loki:
+#     image: grafana/loki:2.5.0
+#     ports:
+#       - "3331:3100"
+#     volumes:
+#       - ./loki-config.yaml:/etc/loki/local-config.yaml
+#     command: -config.file=/etc/loki/local-config.yaml
+    
+  
+#   promtail:
+#     image: grafana/promtail:2.5.0
+#     volumes:
+#       - /var/log:/var/log
+#       - ./promtail-config.yaml:/etc/promtail/config.yml
+#     command: -config.file=/etc/promtail/config.yml
+    
